@@ -1,0 +1,58 @@
+@import "../../../assets/scss/variables";
+@mixin animation-box ($anim, $visibility){
+  animation: $anim;
+  width: 90%;
+  height: 100%;
+  transition: .7s;
+  visibility: $visibility;
+}
+.missing-info {
+  background-color: $color-red !important;
+  color:$color-black;
+}
+.to-much-items {
+  background-color: $color-lila !important;
+  color:$color-black;
+}
+.fill-missing {
+  fill: $color-red;
+}
+.not-visible {
+  @include animation-box(visible-false .7s ease-in,hidden);
+}
+.is-visible {
+  @include animation-box(visible .7s ease-in,initial);
+
+}
+
+
+@keyframes visible {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    width: 90%;
+    height: 100%;
+  }
+}
+@keyframes visible-false {
+  0% {
+    opacity: 1;
+    width: 90%;
+    height: 100%;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}

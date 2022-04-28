@@ -1,0 +1,47 @@
+image: docker:19.03.10
+
+services:
+  - docker:dind
+
+variables:
+  REPOSITORY_URL: 843473367989.dkr.ecr.eu-central-1.amazonaws.com/zonware-frontend
+  TASK_DEFINITION_NAME: zonware-frontend
+  CLUSTER_NAME: zonware
+  SERVICE_NAME: zonware-frontend
+
+before_script:
+  - apk add --no-cache curl jq python py-pip
+  - pip install awscli
+  - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+  - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+  - aws configure set region $AWS_DEFAULT_REGION
+  - $(aws ecr get-login --no-include-email --region "${AWS_DEFAULT_REGION}")
+  - IMAGE_TAG="$(echo $CI_COMMIT_SHA | head -c 8)"
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "Building image..."
+    - docker build -t $REPOSITORY_URL:latest .
+    - echo "Tagging image..."
+    - docker tag $REPOSITORY_URL:latest $REPOSITORY_URL:$IMAGE_TAG
+    - echo "Pushing image..."
+    - docker push $REPOSITORY_URL:latest
+    - docker push $REPOSITORY_URL:$IMAGE_TAG
+  when: manual
+
+deploy:
+  stage: deploy
+  script:
+    - echo $REPOSITORY_URL:$IMAGE_TAG
+    - NEW_CONTAINER_DEFINTIION=$(cat $CI_AWS_ECS_TASK_DEFINITION_FILE | jq --arg IMAGE "$REPOSITORY_URL:$IMAGE_TAG" '.containerDefinitions[0].image = $IMAGE')
+    - echo $NEW_CONTAINER_DEFINTIION
+    - echo "Registering new container definition..."
+    - aws ecs register-task-definition --region "${AWS_DEFAULT_REGION}" --family "${TASK_DEFINITION_NAME}" --cli-input-json "${NEW_CONTAINER_DEFINTIION}"
+    - echo "Updating the service..."
+    - aws ecs update-service --region "${AWS_DEFAULT_REGION}" --cluster "${CLUSTER_NAME}" --service "${SERVICE_NAME}"  --task-definition "${TASK_DEFINITION_NAME}" --desired-count 1 --force-new-deployment
+  when: manual

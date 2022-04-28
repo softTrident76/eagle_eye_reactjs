@@ -1,0 +1,67 @@
+@import "../../../assets/scss/variables";
+
+.pagination ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.page-number {
+  display: inline;
+}
+
+.page-number span {
+  cursor: pointer;
+  text-decoration: none;
+  color: $color-white;
+  font-weight: normal;
+  font-size: clamp(.6rem, 2.5vw, .625rem);
+  padding: 0 5px;
+}
+
+.pagination-list .page-number {
+  height: 80%;
+
+  &.prev {
+    background-color: $color-white;
+    border-radius: 50%;
+
+    span {
+      color: $color-black;
+    }
+  }
+}
+
+.pagination-list .page-number:hover {
+  background-color: $color-purple;
+  border-radius: .625rem;
+
+  span {
+    color: $color-white;
+  }
+}
+
+.pagination-list .active {
+  border-radius: 10px;
+  background-color: $color-purple;
+}
+
+.pagination-list .active:hover {
+  background-color: $color-purple;
+}
+
+.pagination-list .active a {
+  color: #f3f4f2;
+}
+
+.prev {
+  img {
+    margin: 0 1px 3px 0;
+  }
+}
+
+.next {
+  img {
+    transform: rotate(180deg);
+    margin: 0 0 3px 1px;
+  }
+}

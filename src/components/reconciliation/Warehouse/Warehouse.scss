@@ -1,0 +1,14 @@
+@import "../../../assets/scss/variables";
+.warehouse {
+  padding: 4rem 8.25rem;
+  &-text  {
+    color: $color-purple;
+  }
+  &-title {
+    font-size: clamp(2.5rem,4vw,3.5rem);
+    padding-top: .75rem;
+  }
+  &-description {
+    font-size: clamp(.6rem,2.5vw,.75rem);
+  }
+}

@@ -1,0 +1,11 @@
+@import "../../assets/scss/variables";
+.custom-input__box {
+  width: 100%;
+  background-color:$color-white;
+  padding: 8px 12px;
+  border-radius: 1.25rem;
+  height: 2.5rem;
+  &:focus {
+    outline: none;
+  }
+}

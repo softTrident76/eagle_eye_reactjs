@@ -1,0 +1,95 @@
+@import "../../../../assets/scss/variables";
+@mixin font($fs) {
+  font-size: $fs;
+}
+
+.information-block {
+  background: #fff;
+
+  &__close-btn {
+    width: 24px;
+    height: 24px;
+    svg {
+      position: absolute;
+      width: 50%;
+    }
+  }
+  &__header__content {
+    padding: .75rem;
+    &-title {
+      @include font(clamp(.7rem,2.5vw,.75rem));
+    }
+    &-quantity {
+      @include font(clamp(2.2rem,2.5vw,2.5rem));
+      height: 2.5rem;
+    }
+    border-bottom: 1px solid #F2F2F2;
+  }
+  &__main__content {
+    padding: .75rem .75rem 0rem .75rem;
+    &-title {
+      @include font(clamp(.6rem,2.5vw,.625rem));
+    }
+    &-description {
+      padding: 4px 0;
+      @include font(clamp(.6rem,2.5vw,.625rem));
+      word-wrap: break-word;
+    }
+    &-ticket {
+      border-bottom: 1px solid #fff;
+    }
+    &-units {
+      @include font(clamp(.6rem,2.5vw,.6rem));
+      span {
+        @include font(clamp(.6rem,2.5vw,.625rem));
+      }
+    }
+    &-location {
+      @include font(clamp(.6rem,2.5vw,.65rem));
+      border-bottom: 1px solid #F2F2F2;
+
+    }
+  }
+  &__footer__content {
+    padding: .75rem;
+    &-recieved {
+      font-size:clamp(.6rem,2.5vw,.625rem);
+    }
+    &-visit {
+      font-size:clamp(.6rem,2.5vw,.625rem);
+      border-radius: 0;
+      color: $color-black;
+      &:hover {
+        color: $color-black;
+      }
+      svg {
+        fill: $color-black;
+      }
+    }
+    &-radio {
+      font-size:clamp(.6rem,2.5vw,.625rem);
+    }
+    &-btn {
+      color: $color-red;
+      font-size:clamp(.6rem,2.5vw,.625rem);
+      border-radius: 0;
+      &:hover {
+        color: $color-red;
+      }
+      &:focus {
+        color: $color-red;
+      }
+    }
+    &__confirm {
+      &-box {
+        border-bottom: 1px solid #828282;
+      }
+      input {
+        font-size:clamp(.6rem,2.5vw,.625rem);
+      }
+      svg {
+        fill: black;
+      }
+    }
+  }
+}
